@@ -1,4 +1,4 @@
-// Moyassar Health AI — Clinical Interactive Diagnostic Inspector & Claude Reasoning Engine
+// Moyassar Health AI — Clinical Interactive Diagnostic Inspector & Clinical Synthesis Engine
 document.addEventListener('DOMContentLoaded', () => {
 
   // Global State
@@ -846,7 +846,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <path d="M12 6v6l4 2"/>
         </svg>
         <p style="font-size: 0.92rem; color: #94a3b8; max-width: 380px; margin: 0 auto;">
-          Ready to run diagnostic evaluation on <strong>${caseTitle.textContent}</strong>. Click "Run Diagnostic &amp; Generate Claude Report" below.
+          Ready to run diagnostic evaluation on <strong>${caseTitle.textContent}</strong>. Click "Run Diagnostic &amp; Generate Clinical Report" below.
         </p>
       </div>
     `;
@@ -982,7 +982,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hfLink: 'https://huggingface.co/Moyassar/cbc-anemia-classifier',
         icd,
         telemetry: `{ HGB: ${hgb} g/dL, MCV: ${mcv} fL, MCH: ${mch} pg, RBC: ${rbc} M/uL, Ferritin: ${ferritin} ng/mL, Mentzer: ${mentzer} }`,
-        thinkingTokens: '4,120',
+        telemetryBadge: 'Mentzer Rule Engine • Pass',
         thinkingTrace,
         claudeSummary: {
           doctorNotes,
@@ -1005,7 +1005,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let patientArabic = '';
       let thinkingTrace = [];
       let telemetry = '';
-      let thinkingTokens = '3,860';
+      let telemetryBadge = isApiOnline ? 'PyTorch CPU Worker • Live API' : 'YOLOv8x Benchmark';
 
       if (live) {
         const count = live.findings_count || 0;
@@ -1076,7 +1076,7 @@ document.addEventListener('DOMContentLoaded', () => {
           raw_findings: findings.map(f => ({ condition: f.condition, conf: f.confidence_pct, box: [f.x, f.y, f.w, f.h] })),
           api_latency_ms: live.inference_time_ms
         });
-        thinkingTokens = `${3200 + count * 400}`;
+        telemetryBadge = `Live PyTorch YOLO • ${latency}`;
       } else {
         diagnosisTitle = isCustom ? 'DETECTED: High-Probability Coronal Dentinal Pathology' : `DETECTED: ${curPreset.name}`;
         doctorNotes = 'Radiographic radiolucency indicates irreversible coronal dentin degradation extending toward the pulpal horns with associated widening of the periodontal ligament (PDL) space. Immediate endodontic intervention is indicated to arrest progression into acute apical abscess.';
@@ -1092,6 +1092,7 @@ document.addEventListener('DOMContentLoaded', () => {
           `ResNet-50 Classifier: Multi-label pathology confirms pulpal encroachment & periapical PDL widening.`
         ];
         telemetry = `{ Resolution: "640x640", Model: "YOLOv8x", mAP50: 0.78, Accuracy: "91.06%", Target_Pathology: "Caries & Radiolucency" }`;
+        telemetryBadge = 'Validated Benchmark Set';
       }
 
       if (hasCustomNote) {
@@ -1107,7 +1108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hfLink: 'https://huggingface.co/Moyassar/dental-pathology-yolo',
         icd,
         telemetry,
-        thinkingTokens,
+        telemetryBadge,
         thinkingTrace,
         claudeSummary: {
           doctorNotes,
@@ -1130,7 +1131,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let patientArabic = '';
       let thinkingTrace = [];
       let telemetry = '';
-      let thinkingTokens = '4,450';
+      let telemetryBadge = isApiOnline ? 'PyTorch YOLO • Live API' : 'Axial T1-CE Benchmark';
 
       if (live) {
         const count = live.findings_count || 0;
@@ -1180,7 +1181,7 @@ document.addEventListener('DOMContentLoaded', () => {
           raw_findings: findings.map(f => ({ classification: f.classification, conf: f.confidence_pct, box: [f.x, f.y, f.w, f.h] })),
           api_latency_ms: live.inference_time_ms
         });
-        thinkingTokens = `${3600 + count * 450}`;
+        telemetryBadge = `Live PyTorch YOLO • ${latency}`;
       } else {
         diagnosisTitle = isCustom ? 'SEGMENTED: Circumscribed Contrast-Enhancing Intracranial Lesion' : `SEGMENTED: ${curPreset.name}`;
         doctorNotes = 'Axial contrast-enhanced MRI demonstrates a localized extra-axial intracranial mass with marked peripheral enhancement and dural attachment. Moderate perilesional vasogenic edema observed without significant midline shift or ventricular effacement.';
@@ -1196,6 +1197,7 @@ document.addEventListener('DOMContentLoaded', () => {
           `Neuro-Radiology Logic: Evaluating dural tail sign and mass effect on surrounding sulci.`
         ];
         telemetry = `{ Modality: "Axial T1-CE", Resolution: "512x512", Segmentation_Core: "OpenCV CNN", Estimated_Volume: "24.6 - 32.1 cm³" }`;
+        telemetryBadge = 'OpenCV CNN Benchmark';
       }
 
       if (hasCustomNote) {
@@ -1211,7 +1213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hfLink: 'https://huggingface.co/Moyassar/brain-tumor-mri-detection',
         icd,
         telemetry,
-        thinkingTokens,
+        telemetryBadge,
         thinkingTrace,
         claudeSummary: {
           doctorNotes,
@@ -1352,21 +1354,21 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Step 3: Claude API Interface (350ms)
+    // Step 3: Clinical Decision Logic (350ms)
     progressFill.style.width = '65%';
     stepNodes[1].classList.remove('active');
     stepNodes[1].classList.add('completed');
     stepNodes[2].classList.add('active');
-    btnRunText.textContent = 'Serializing Telemetry to Claude API Interface...';
+    btnRunText.textContent = 'Synthesizing Clinical Decision Logic & ICD-10 Mapping...';
 
     await new Promise(r => setTimeout(r, 350));
 
-    // Step 4: Final Synthesis (400ms)
+    // Step 4: Final Documentation Synthesis (400ms)
     progressFill.style.width = '88%';
     stepNodes[2].classList.remove('active');
     stepNodes[2].classList.add('completed');
     stepNodes[3].classList.add('active');
-    btnRunText.textContent = 'Synthesizing Claude Clinical Reasoning & SOAP Notes...';
+    btnRunText.textContent = 'Formatting Physician SOAP Documentation & Patient Guidance...';
 
     await new Promise(r => setTimeout(r, 400));
 
@@ -1419,21 +1421,21 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="meta-value" style="font-size: 0.74rem; color: #94a3b8; word-break: break-all;">${res.telemetry}</span>
         </div>
 
-        <!-- Claude Medical Reasoning Core -->
+        <!-- Clinical Synthesis & Decision Support Protocol -->
         <div class="claude-box">
           <div class="claude-header-bar">
-            <span class="claude-tag-badge">⚡ CLAUDE AI CLINICAL INTEGRATION BLUEPRINT</span>
-            <span style="font-size: 0.7rem; color: #a855f7; font-family: var(--font-mono);">SOAP Architecture</span>
+            <span class="claude-tag-badge">📋 CLINICAL SYNTHESIS PROTOCOL &bull; CLAUDE INTEGRATION BLUEPRINT</span>
+            <span style="font-size: 0.7rem; color: #a855f7; font-family: var(--font-mono);">Structured SOAP Engine</span>
           </div>
 
-          <!-- Visible Claude Extended Thinking Terminal -->
+          <!-- Clinical Telemetry & Inference Trace Terminal -->
           <div class="claude-thinking-terminal">
             <div class="thinking-header">
               <div style="display: flex; align-items: center; gap: 6px;">
-                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #a855f7; box-shadow: 0 0 8px #a855f7;"></span>
-                <span>CLAUDE CLINICAL REASONING TRACE &bull; TELEMETRY LOG</span>
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 8px #38bdf8;"></span>
+                <span>CLINICAL TELEMETRY &amp; INFERENCE TRACE &bull; AUDIT LOG</span>
               </div>
-              <span class="thinking-time">${res.thinkingTokens} Reasoning Tokens</span>
+              <span class="thinking-time">${res.telemetryBadge || 'Rule Engine Pass • Zero-PII'}</span>
             </div>
             <div class="thinking-stream">
               ${res.thinkingTrace.map(line => `
@@ -1464,7 +1466,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="patient-bilingual-box">
             <div style="font-size: 0.76rem; font-weight: 700; color: #34d399; display: flex; align-items: center; gap: 6px;">
               <span>💬</span>
-              <span>شرح مبسط ومطمئن للمريض باللغة العربية (Patient-Facing Guidance):</span>
+              <span>شرح مبسط ومطمئن للمريض باللغة العربية (Structured Clinical Guidance):</span>
             </div>
             <div class="patient-ar-content">
               ${res.claudeSummary.patientArabic}
@@ -1539,7 +1541,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div><strong>Confidence Score:</strong> ${res.confidence}</div>
           <div><strong>Primary Finding:</strong> ${res.badge}</div>
           <div><strong>ICD-10 Diagnostic Code:</strong> ${res.icd}</div>
-          <div><strong>Clinical Reasoning:</strong> Anthropic Claude AI Clinical Intelligence Core</div>
+          <div><strong>Clinical Synthesis:</strong> Moyassar Clinical Decision Support Engine (Blueprint for Claude Integration)</div>
           <div><strong>Execution Latency:</strong> ${res.time}</div>
         </div>
 
