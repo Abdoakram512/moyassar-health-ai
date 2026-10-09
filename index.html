@@ -43,8 +43,50 @@
       </nav>
 
       <div class="nav-actions">
-        <a href="#interactive-demo" class="btn btn-outline btn-sm">Launch Demo</a>
-        <a href="#contact" class="btn btn-primary btn-sm">Contact Founders</a>
+        <a href="#interactive-demo" class="btn btn-outline btn-sm nav-btn-desktop">Launch Demo</a>
+        <a href="#contact" class="btn btn-primary btn-sm nav-btn-contact">Contact Founders</a>
+        <button class="mobile-toggle-btn" id="mobile-toggle-btn" aria-label="Toggle Navigation Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+      <nav class="mobile-nav-links">
+        <a href="#modules" class="mobile-nav-link">
+          <span class="m-icon">🩺</span>
+          <span>Diagnostic Engines</span>
+        </a>
+        <a href="#copilot" class="mobile-nav-link">
+          <span class="m-icon">⚡</span>
+          <span>Claude 3.7 Core</span>
+        </a>
+        <a href="#pipeline" class="mobile-nav-link">
+          <span class="m-icon">⚙️</span>
+          <span>Mechanism of Work</span>
+        </a>
+        <a href="#interactive-demo" class="mobile-nav-link">
+          <span class="m-icon">🔬</span>
+          <span>Interactive Live Demo</span>
+        </a>
+        <a href="#docs" class="mobile-nav-link">
+          <span class="m-icon">📄</span>
+          <span>Docs &amp; Whitepapers</span>
+        </a>
+        <a href="#architecture" class="mobile-nav-link">
+          <span class="m-icon">🏗️</span>
+          <span>System Architecture</span>
+        </a>
+        <a href="#contact" class="mobile-nav-link">
+          <span class="m-icon">✉️</span>
+          <span>Contact Founders</span>
+        </a>
+      </nav>
+      <div class="mobile-nav-footer">
+        <a href="#interactive-demo" class="btn btn-primary btn-block mobile-cta-btn">Launch Medical Demo</a>
       </div>
     </div>
   </header>
@@ -300,24 +342,24 @@
           </div>
 
           <!-- Deep Learning Perception vs Claude Cognition Comparison Card -->
-          <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: var(--radius-md); padding: 24px; margin-bottom: 24px;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-              <div style="border-right: 1px solid rgba(255, 255, 255, 0.08); padding-right: 20px;">
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <span style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">LAYER 1: PERCEPTION</span>
-                  <h4 style="font-size: 1.05rem; margin: 0; color: #f8fafc;">Computer Vision &amp; Deep Learning</h4>
+          <div class="comparison-card">
+            <div class="comparison-grid">
+              <div class="comparison-col-left">
+                <div class="comparison-header">
+                  <span class="comparison-badge badge-perception">LAYER 1: PERCEPTION</span>
+                  <h4 class="comparison-heading">Computer Vision &amp; Deep Learning</h4>
                 </div>
-                <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                <p class="comparison-text">
                   Models: <strong>YOLOv8, ResNet-50, TabNet, OpenCV, CNNs</strong>.<br>
                   <em>Role:</em> Raw sensory perception. Detects bounding boxes around dental caries, measures blood cell morphology, and segments brain MRI slices. Outputs numerical probabilities without clinical medical context.
                 </p>
               </div>
-              <div>
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <span style="background: rgba(168, 85, 247, 0.25); color: #d8b4fe; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">LAYER 2: CLINICAL REASONING</span>
-                  <h4 style="font-size: 1.05rem; margin: 0; color: #f8fafc;">Anthropic Claude 3.7 Sonnet Core</h4>
+              <div class="comparison-col-right">
+                <div class="comparison-header">
+                  <span class="comparison-badge badge-cognition">LAYER 2: CLINICAL REASONING</span>
+                  <h4 class="comparison-heading">Anthropic Claude 3.7 Sonnet Core</h4>
                 </div>
-                <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                <p class="comparison-text">
                   Model: <strong>Claude 3.7 Sonnet with Extended Reasoning Tokens</strong>.<br>
                   <em>Role:</em> The Clinical Medical Brain. Synthesizes multi-specialty findings, performs differential diagnosis deliberation, checks contraindications, drafts standardized physician SOAP notes (with ICD-10 codes), and produces empathetic patient explanations in Arabic and English.
                 </p>
@@ -476,8 +518,8 @@
           <p class="section-desc">
             Executive clinical validation studies, platform architectures, and diagnostic protocols. All internal backend code, proprietary algorithms, and database credentials are strictly omitted for IP security.
           </p>
-          <div style="margin-top: 14px;">
-            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; font-size: 0.78rem; color: #34d399; font-weight: 600;">
+          <div class="security-pill-container">
+            <span class="security-pill">
               🔒 Zero-Code Secure Executive Summaries &bull; HIPAA &amp; GDPR Compliant Whitepapers
             </span>
           </div>
@@ -539,19 +581,19 @@
     </section>
 
     <!-- Medical Governance & Regulatory Notice -->
-    <section class="section section-dark" style="padding: 50px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+    <section class="section section-dark section-governance">
       <div class="container">
-        <div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
-          <div style="display: flex; gap: 14px; align-items: center;">
-            <div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); display: flex; align-items: center; justify-content: center; color: #34d399; font-weight: bold; flex-shrink: 0;">
+        <div class="governance-banner">
+          <div class="governance-badge-group">
+            <div class="governance-icon">
               🛡️
             </div>
             <div>
-              <h4 style="font-size: 0.95rem; margin-bottom: 2px;">HIPAA &amp; GDPR Ready Architectural Principles</h4>
-              <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Zero persistent patient PII storage on inference workers. Ephemeral end-to-end TLS 1.3 encryption.</p>
+              <h4 class="governance-title">HIPAA &amp; GDPR Ready Architectural Principles</h4>
+              <p class="governance-desc">Zero persistent patient PII storage on inference workers. Ephemeral end-to-end TLS 1.3 encryption.</p>
             </div>
           </div>
-          <div style="flex: 1; min-width: 300px; padding: 12px 18px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.78rem; color: var(--text-dim); line-height: 1.5;">
+          <div class="governance-disclaimer">
             <strong>Clinical Disclaimer:</strong> Moyassar Health AI operates as a Class I Clinical Decision Support System (CDSS) intended to assist qualified medical professionals. It does not replace independent clinical judgment.
           </div>
         </div>

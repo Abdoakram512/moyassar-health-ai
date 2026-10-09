@@ -207,6 +207,119 @@ body {
   flex-shrink: 0;
 }
 
+/* Mobile Toggle Button */
+.mobile-toggle-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 38px;
+  height: 38px;
+  padding: 8px 7px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  z-index: 101;
+  transition: var(--transition);
+}
+
+.mobile-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--primary-glow);
+}
+
+.mobile-toggle-btn span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-main);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-toggle-btn.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-toggle-btn.active span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.mobile-toggle-btn.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile Nav Drawer */
+.mobile-nav-drawer {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: rgba(8, 13, 26, 0.98);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border-highlight);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  padding: 20px 24px 28px;
+  max-height: calc(100vh - 70px);
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 99;
+}
+
+.mobile-nav-drawer.open {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.98rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: var(--transition);
+}
+
+.mobile-nav-link:hover, .mobile-nav-link:active {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.3);
+  color: var(--primary-glow);
+  transform: translateX(4px);
+}
+
+.mobile-nav-link .m-icon {
+  font-size: 1.15rem;
+  width: 26px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.mobile-nav-footer {
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
@@ -1236,7 +1349,150 @@ body {
   color: var(--primary-glow);
 }
 
-/* Responsive */
+/* Comparison Card: Deep Learning Perception vs Claude 3.7 Cognition */
+.comparison-card {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.comparison-col-left {
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding-right: 20px;
+}
+
+.comparison-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.comparison-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.badge-perception {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+}
+
+.badge-cognition {
+  background: rgba(168, 85, 247, 0.25);
+  color: #d8b4fe;
+}
+
+.comparison-heading {
+  font-size: 1.05rem;
+  margin: 0;
+  color: #f8fafc;
+}
+
+.comparison-text {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Security Pill (Docs section) */
+.security-pill-container {
+  margin-top: 14px;
+}
+
+.security-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 20px;
+  font-size: 0.78rem;
+  color: #34d399;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  max-width: 100%;
+}
+
+/* Section Governance (HIPAA & Regulatory) */
+.section-governance {
+  padding: 44px 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.governance-banner {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.governance-badge-group {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex: 1;
+  min-width: 260px;
+}
+
+.governance-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #34d399;
+  font-weight: bold;
+  flex-shrink: 0;
+  font-size: 1.2rem;
+}
+
+.governance-title {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.governance-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.governance-disclaimer {
+  flex: 1;
+  min-width: 260px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   COMPREHENSIVE RESPONSIVE DESIGN (Tablets, Mobiles, Small Screens)
+   ========================================================================== */
+
+/* Large Tablets & Small Laptops (max-width: 1100px) */
 @media (max-width: 1100px) {
   .nav-links {
     gap: 14px;
@@ -1249,40 +1505,251 @@ body {
   }
 }
 
+/* Tablets (max-width: 992px) */
 @media (max-width: 992px) {
-  .grid-3 {
-    grid-template-columns: 1fr;
-  }
-  .copilot-grid, .sandbox-grid, .contact-grid {
-    grid-template-columns: 1fr;
-  }
-  .workflow-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .metrics-bar {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .nav-links {
     display: none;
   }
+  .mobile-toggle-btn {
+    display: flex;
+  }
+  .grid-3 {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .copilot-grid, .sandbox-grid, .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .workflow-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .metrics-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 20px;
+  }
+  .section {
+    padding: 60px 0;
+  }
 }
 
-@media (max-width: 600px) {
-  .workflow-grid {
+/* Landscape Phones & Small Tablets (max-width: 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 18px;
+  }
+  .nav-btn-desktop {
+    display: none;
+  }
+  .hero {
+    padding: 50px 0 35px;
+  }
+  .hero-badge {
+    font-size: 0.76rem;
+    padding: 6px 14px;
+    margin-bottom: 18px;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: clamp(1.85rem, 6.5vw, 2.7rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .hero-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin-bottom: 26px;
+    padding: 0 4px;
+  }
+  .hero-cta-group {
+    margin-bottom: 40px;
+    gap: 12px;
+  }
+  .section {
+    padding: 48px 0;
+  }
+  .section-title {
+    font-size: 1.55rem;
+  }
+  .section-desc {
+    font-size: 0.88rem;
+  }
+  .copilot-box, .contact-card, .sandbox-container {
+    padding: 22px 16px;
+    border-radius: var(--radius-md);
+  }
+  .copilot-title {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+  .copilot-terminal {
+    font-size: 0.78rem;
+    max-width: 100%;
+  }
+  .terminal-header {
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 14px;
+  }
+  .terminal-body {
+    padding: 16px 12px;
+  }
+  .term-data code {
+    word-break: break-all;
+    white-space: pre-wrap;
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+  .comparison-card {
+    padding: 18px 14px;
+  }
+  .comparison-grid {
     grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .comparison-col-left {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-right: 0;
+    padding-bottom: 18px;
+  }
+  .sandbox-panel {
+    padding: 18px 14px;
+  }
+  .arch-diagram {
+    padding: 0 4px;
+  }
+  .arch-layer {
+    padding: 16px 12px;
+  }
+  .arch-node {
+    font-size: 0.82rem;
+    padding: 8px 14px;
+  }
+  .node-claude {
+    padding: 12px 18px;
+  }
+}
+
+/* Mobile Phones (max-width: 600px) */
+@media (max-width: 600px) {
+  .container {
+    padding: 0 14px;
+  }
+  .nav-container {
+    padding: 12px 14px;
+  }
+  .logo-title {
+    font-size: 0.98rem;
+  }
+  .badge-ai {
+    font-size: 0.62rem;
+    padding: 2px 6px;
+  }
+  .nav-actions .nav-btn-contact {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-cta-group .btn {
+    width: 100%;
+    justify-content: center;
   }
   .metrics-bar {
     grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 12px;
+  }
+  .metric-value {
+    font-size: 1.7rem;
+  }
+  .workflow-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .workflow-card {
+    padding: 18px 14px;
+  }
+  .sandbox-tabs {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .tab-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 14px;
+    font-size: 0.84rem;
+  }
+  .panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .panel-timestamp {
+    align-self: flex-start;
+  }
+  .meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 6px 0;
+  }
+  .arch-node {
+    width: 100%;
+    text-align: center;
+  }
+  .governance-badge-group {
+    min-width: 100%;
+  }
+  .governance-disclaimer {
+    min-width: 100%;
+  }
+  .info-row {
+    flex-direction: column;
+    gap: 2px;
+  }
+  .info-label {
+    width: auto;
+    font-size: 0.82rem;
   }
   .form-btn-wrapper {
     justify-content: stretch;
   }
   .btn-send-inquiry {
     width: 100%;
+    min-width: 0;
+    height: 48px;
   }
   .footer-content {
     flex-direction: column;
     text-align: center;
     gap: 16px;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 16px;
+  }
+}
+
+/* Very Small Screen Devices (max-width: 380px) */
+@media (max-width: 380px) {
+  .logo-text .logo-sub {
+    display: none;
+  }
+  .nav-actions .nav-btn-contact {
+    display: none;
+  }
+  .hero-title {
+    font-size: 1.65rem;
   }
 }
