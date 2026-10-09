@@ -988,6 +988,75 @@ body {
   to { transform: rotate(360deg); }
 }
 
+/* Reviewer Notice Banner */
+.reviewer-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(168, 85, 247, 0.12) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  margin-bottom: 22px;
+  font-size: 0.88rem;
+  color: #e2e8f0;
+  box-shadow: 0 4px 20px rgba(56, 189, 248, 0.1);
+}
+
+.reviewer-banner-badge {
+  background: #0284c7;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Reviewer Custom Prompt Box */
+.reviewer-custom-box {
+  margin-top: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(56, 189, 248, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+}
+
+.reviewer-custom-label {
+  font-size: 0.76rem;
+  color: var(--primary-glow);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.reviewer-custom-textarea {
+  width: 100%;
+  height: 54px;
+  background: #040714;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  color: #f1f5f9;
+  font-size: 0.82rem;
+  font-family: var(--font-main);
+  padding: 8px 10px;
+  resize: none;
+  transition: var(--transition);
+  box-sizing: border-box;
+}
+
+.reviewer-custom-textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+}
+
 /* Preset Controls */
 .preset-container {
   margin-bottom: 16px;
@@ -1418,6 +1487,59 @@ body {
   font-size: 0.72rem;
   font-weight: 700;
   color: #c084fc;
+}
+
+/* Claude 3.7 Extended Thinking Terminal */
+.claude-thinking-terminal {
+  background: #030712;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #c084fc;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.thinking-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: #d8b4fe;
+}
+
+.thinking-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 160px;
+  overflow-y: auto;
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+.thinking-line {
+  display: flex;
+  gap: 6px;
+  animation: fadeIn 0.25s ease;
+}
+
+.thinking-prompt {
+  color: #38bdf8;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+
+.thinking-time {
+  color: #a855f7;
+  font-size: 0.72rem;
+  flex-shrink: 0;
 }
 
 /* SOAP Formatting Cards */

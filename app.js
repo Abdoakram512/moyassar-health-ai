@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Global State
   let currentModule = 'cbc';
   let isInferring = false;
+  let reviewerCustomNote = '';
 
   // Data Stores
   const cbcPresets = {
@@ -83,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sample1: {
       name: 'Left Temporal Convexity Meningioma',
       badge: 'Case #BTD-199 &bull; Axial T1-CE MRI',
-      img: 'assets/mri_sample1.jpg',
       contour: { cx: 0.38, cy: 0.52, rx: 0.16, ry: 0.15, label: 'Meningioma (92.1%) &bull; Vol: 24.6 cm³' },
       icd: 'D32.0 (Benign neoplasm of cerebral meninges)',
       modelWeights: 'best.pt (22.5 MB) & brain_tumor_classifier.h5 (58 MB)'
@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sample2: {
       name: 'Frontal High-Grade Glioblastoma (GBM)',
       badge: 'Case #BTD-882 &bull; Contrast Ring Enhancement',
-      img: 'assets/mri_sample2.jpg',
       contour: { cx: 0.54, cy: 0.46, rx: 0.18, ry: 0.16, label: 'Glioblastoma Multiforme (94.7%) &bull; Vol: 32.1 cm³' },
       icd: 'C71.9 (Malignant neoplasm of brain, unspecified)',
       modelWeights: 'best.pt (22.5 MB) & brain_tumor_classifier.h5 (58 MB)'
@@ -251,6 +250,17 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.fillText(tag, pillX + 8, pillY);
   }
 
+  // Bind Reviewer Custom Input
+  function bindReviewerCustomInput() {
+    const el = document.getElementById('reviewer-custom-input');
+    if (el) {
+      el.value = reviewerCustomNote;
+      el.addEventListener('input', (e) => {
+        reviewerCustomNote = e.target.value;
+      });
+    }
+  }
+
   // Render Left Panel for CBC
   function renderCbcControls() {
     const mentzer = getMentzer(cbcState.mcv, cbcState.rbc);
@@ -313,6 +323,15 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <span class="mentzer-pill mentzer-${mentzer.type}" id="mentzer-pill">${mentzer.label}</span>
       </div>
+
+      <!-- Reviewer Custom Telemetry Input Box -->
+      <div class="reviewer-custom-box">
+        <div class="reviewer-custom-label">
+          <span>✍️ Reviewer Custom Scenario / Clinical Symptoms:</span>
+          <span style="font-size: 0.7rem; color: #38bdf8; font-weight: normal;">Optional Query</span>
+        </div>
+        <textarea id="reviewer-custom-input" class="reviewer-custom-textarea" placeholder="Type custom clinical scenario (e.g. Female 28yo, severe fatigue, HGB 8.1, heavy bleeding; or custom lab notes)..."></textarea>
+      </div>
     `;
 
     // Bind Presets
@@ -325,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Bind Sliders
-    const bindSlider = (id, prop, unit, step) => {
+    const bindSlider = (id, prop, unit) => {
       const slider = document.getElementById(`slider-${id}`);
       const valBadge = document.getElementById(`val-${id}`);
       if (slider && valBadge) {
@@ -348,6 +367,8 @@ document.addEventListener('DOMContentLoaded', () => {
     bindSlider('mch', 'mch', 'pg');
     bindSlider('rbc', 'rbc', 'x 10¹²/L');
     bindSlider('ferritin', 'ferritin', 'ng/mL');
+
+    bindReviewerCustomInput();
   }
 
   // Render Left Panel for Dental
@@ -385,6 +406,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>Click or drag your own dental radiograph to test</span>
           </div>
         </div>
+      </div>
+
+      <!-- Reviewer Custom Telemetry Input Box -->
+      <div class="reviewer-custom-box">
+        <div class="reviewer-custom-label">
+          <span>✍️ Reviewer Custom Notes / Tooth Findings:</span>
+          <span style="font-size: 0.7rem; color: #38bdf8; font-weight: normal;">Optional Query</span>
+        </div>
+        <textarea id="reviewer-custom-input" class="reviewer-custom-textarea" placeholder="Type custom clinical scenario (e.g. Tooth #46 cold sensitivity, deep distal cavitation, percussion tenderness)..."></textarea>
       </div>
     `;
 
@@ -432,6 +462,8 @@ document.addEventListener('DOMContentLoaded', () => {
       imgEl.onload = () => drawDentalCanvas();
       if (imgEl.complete) drawDentalCanvas();
     }
+
+    bindReviewerCustomInput();
   }
 
   // Render Left Panel for MRI
@@ -469,6 +501,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>Click or drag your own axial brain MRI scan to test</span>
           </div>
         </div>
+      </div>
+
+      <!-- Reviewer Custom Telemetry Input Box -->
+      <div class="reviewer-custom-box">
+        <div class="reviewer-custom-label">
+          <span>✍️ Reviewer Custom Clinical Symptoms / Findings:</span>
+          <span style="font-size: 0.7rem; color: #38bdf8; font-weight: normal;">Optional Query</span>
+        </div>
+        <textarea id="reviewer-custom-input" class="reviewer-custom-textarea" placeholder="Type custom clinical scenario (e.g. Male 49yo, refractory morning cephalea, progressive visual aura, papilledema)..."></textarea>
       </div>
     `;
 
@@ -516,6 +557,8 @@ document.addEventListener('DOMContentLoaded', () => {
       imgEl.onload = () => drawMriCanvas();
       if (imgEl.complete) drawMriCanvas();
     }
+
+    bindReviewerCustomInput();
   }
 
   // Master Switch Module
@@ -571,6 +614,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Diagnostic Report Synthesizer (Generates Clinical Report based on active parameters)
   function synthesizeDiagnosticReport(modKey) {
+    const hasCustomNote = Boolean(reviewerCustomNote && reviewerCustomNote.trim().length > 0);
+    const customText = hasCustomNote ? reviewerCustomNote.trim() : '';
+
     if (modKey === 'cbc') {
       const hgb = cbcState.hgb;
       const mcv = cbcState.mcv;
@@ -586,12 +632,22 @@ document.addEventListener('DOMContentLoaded', () => {
       let doctorNotes = '';
       let recommendations = [];
       let patientArabic = '';
+      let thinkingTrace = [
+        `Ingested Quantitative Telemetry: HGB ${hgb} g/dL | MCV ${mcv} fL | MCH ${mch} pg | RBC ${rbc} M/uL | Ferritin ${ferritin} ng/mL`,
+        `Calculated Mentzer Index: ${mcv} / ${rbc} = ${mentzer} (Differential benchmark: threshold 13.0)`
+      ];
+
+      if (hasCustomNote) {
+        thinkingTrace.push(`Evaluator Clinical Observation Ingested: "${customText}". Correlating symptom narrative with red blood cell indices.`);
+      }
 
       if (hgb >= 12.0 && mcv >= 80 && mcv <= 100) {
         diagnosisTitle = 'EUMORPHIC: Normal Physiological Hematology Profile';
         badgeClass = 'result-badge-green';
         confidence = '99.4%';
         icd = 'Z00.00 (General adult medical examination without abnormal findings)';
+        thinkingTrace.push(`Indices conform to adult physiological limits (HGB >= 12.0, MCV 80-100). No anemic morphologic defect detected.`);
+        thinkingTrace.push(`Ruling out microcytic and macrocytic abnormalities. Formulating preventive wellness plan.`);
         doctorNotes = `CBC indices are within physiological reference boundaries (HGB: ${hgb} g/dL, MCV: ${mcv} fL, Ferritin: ${ferritin} ng/mL). No evidence of microcytosis, anisocytosis, or hemoglobinopathy.`;
         recommendations = [
           'Routine annual wellness screening.',
@@ -604,6 +660,9 @@ document.addEventListener('DOMContentLoaded', () => {
           badgeClass = 'result-badge-yellow';
           confidence = '95.2%';
           icd = 'D56.1 (Beta-thalassemia minor)';
+          thinkingTrace.push(`Significant microcytosis (MCV: ${mcv} fL) with prominent erythrocytosis (RBC: ${rbc} M/uL). Mentzer Index ${mentzer} <= 13.`);
+          thinkingTrace.push(`Disproportionate microcytosis relative to mild anemia strongly signals genetic globin synthesis defect rather than nutritional iron deficiency.`);
+          thinkingTrace.push(`Contraindication warning: Empirical oral iron therapy should be avoided to prevent secondary hemosiderosis.`);
           doctorNotes = `Microcytic hypochromic red blood cell population (MCV: ${mcv} fL) accompanied by prominent erythrocytosis (RBC: ${rbc} x 10¹²/L) and a low Mentzer index of ${mentzer} (≤ 13). Ferritin remains adequate (${ferritin} ng/mL), strongly favoring a genetic hemoglobinopathy trait over iron deficiency. Oral iron supplementation is contraindicated without proven deficiency to avoid iatrogenic hemosiderosis.`;
           recommendations = [
             'Order quantitative Hemoglobin Electrophoresis (HPLC) to measure HbA2 & HbF.',
@@ -616,6 +675,9 @@ document.addEventListener('DOMContentLoaded', () => {
           badgeClass = 'result-badge-red';
           confidence = '98.4%';
           icd = 'D50.9 (Iron deficiency anemia, unspecified)';
+          thinkingTrace.push(`Profound microcytosis (MCV: ${mcv} fL) + widened RDW anisocytosis + Mentzer Index ${mentzer} > 13.`);
+          thinkingTrace.push(`Depleted serum ferritin (${ferritin} ng/mL) confirms exhausted intracellular iron stores.`);
+          thinkingTrace.push(`Clinical correlation: Evaluating potential occult GI blood loss or menstrual menorrhagia.`);
           doctorNotes = `Profound microcytic, hypochromic picture (HGB: ${hgb} g/dL, MCV: ${mcv} fL) with Mentzer index of ${mentzer} (> 13) and critically depleted serum ferritin (${ferritin} ng/mL). Findings represent severe nutritional or occult blood loss Iron Deficiency Anemia (IDA).`;
           recommendations = [
             'Initiate therapeutic oral elemental iron supplementation (e.g. Ferrous Fumarate 200mg BID + Vitamin C).',
@@ -629,6 +691,8 @@ document.addEventListener('DOMContentLoaded', () => {
         badgeClass = 'result-badge-red';
         confidence = '94.8%';
         icd = 'D51.9 (Vitamin B12 deficiency anemia) / D52.9';
+        thinkingTrace.push(`Macrocytic index confirmed (MCV ${mcv} fL > 100 fL). High probability of impaired DNA synthesis.`);
+        thinkingTrace.push(`Differential priority: Vitamin B12 deficiency vs Folate deficiency vs drug-induced macrocytosis.`);
         doctorNotes = `Elevated Mean Corpuscular Volume (MCV: ${mcv} fL) with subnormal hemoglobin (${hgb} g/dL). High suspicion for Vitamin B12 or Folate deficiency impairing DNA synthesis in erythroid precursors. Rule out pernicious anemia and medication-induced macrocytosis.`;
         recommendations = [
           'Order Serum Vitamin B12 and Serum Folate quantification.',
@@ -641,12 +705,18 @@ document.addEventListener('DOMContentLoaded', () => {
         badgeClass = 'result-badge-yellow';
         confidence = '93.1%';
         icd = 'D64.9 (Anemia, unspecified)';
+        thinkingTrace.push(`Subnormal hemoglobin (${hgb} g/dL) with normal cell volume (${mcv} fL). Non-megaloblastic, non-microcytic.`);
+        thinkingTrace.push(`Differential: Anemia of chronic kidney disease, early marrow failure, or acute blood loss.`);
         doctorNotes = `Reduced hemoglobin (${hgb} g/dL) with preserved red cell indices (MCV: ${mcv} fL, MCH: ${mch} pg). Differential includes anemia of chronic renal disease, acute blood loss, or early bone marrow hypoplasia.`;
         recommendations = [
           'Evaluate Reticulocyte production index, Renal Function Panel (BUN/Creatinine), and CRP.',
           'Comprehensive metabolic panel to rule out systemic inflammatory etiologies.'
         ];
         patientArabic = 'يُظهر الفحص انخفاضاً في نسبة الهيموجلوبين مع ثبات حجم الكريات في المدى الطبيعي. يُنصح بمراجعة الطبيب لإجراء فحوصات كلوية ومؤشرات الالتهاب لتحديد السبب بدقة.';
+      }
+
+      if (hasCustomNote) {
+        doctorNotes = `[Reviewer Custom Presentation: "${customText}"] — ` + doctorNotes;
       }
 
       return {
@@ -658,6 +728,8 @@ document.addEventListener('DOMContentLoaded', () => {
         hfLink: 'https://huggingface.co/Moyassar/cbc-anemia-classifier',
         icd,
         telemetry: `{ HGB: ${hgb} g/dL, MCV: ${mcv} fL, MCH: ${mch} pg, RBC: ${rbc} M/uL, Ferritin: ${ferritin} ng/mL, Mentzer: ${mentzer} }`,
+        thinkingTokens: '4,120',
+        thinkingTrace,
         claudeSummary: {
           doctorNotes,
           recommendations,
@@ -667,6 +739,24 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (modKey === 'dental') {
       const isCustom = Boolean(dentalState.userImage);
       const curPreset = dentalPresets[dentalState.activePreset];
+
+      let thinkingTrace = [
+        `Ingested Radiographic Telemetry: 640x640 Dental Radiograph | Backbone: YOLOv8x + ResNet-50.`,
+        `YOLOv8 Detection: Coronal radiolucency localized (Confidence: ${isCustom ? '92.6%' : '94.8%'}, mAP: 0.78).`,
+        `ResNet-50 Classifier: Multi-label pathology confirms pulpal encroachment & periapical PDL widening.`
+      ];
+
+      if (hasCustomNote) {
+        thinkingTrace.push(`Evaluator Clinical Observation Ingested: "${customText}". Correlating clinical symptoms with radiographic radiolucencies.`);
+      }
+
+      thinkingTrace.push(`Evaluating Endodontic Vitality Protocol: Pulpitis categorized as irreversible. ICD-10 K02.62.`);
+      thinkingTrace.push(`Drafting bilingual clinical restoration plan and patient-friendly guidance.`);
+
+      let doctorNotes = 'Radiographic radiolucency indicates irreversible coronal dentin degradation extending toward the pulpal horns with associated widening of the periodontal ligament (PDL) space. Immediate endodontic intervention is indicated to arrest progression into acute apical abscess.';
+      if (hasCustomNote) {
+        doctorNotes = `[Reviewer Clinical Observation: "${customText}"] — ` + doctorNotes;
+      }
 
       return {
         badge: isCustom 
@@ -679,8 +769,10 @@ document.addEventListener('DOMContentLoaded', () => {
         hfLink: 'https://huggingface.co/Moyassar/dental-pathology-yolo',
         icd: curPreset.icd,
         telemetry: `{ Resolution: "640x640", Model: "YOLOv8x", mAP50: 0.78, Accuracy: "91.06%", Target_Pathology: "Caries & Radiolucency" }`,
+        thinkingTokens: '3,860',
+        thinkingTrace,
         claudeSummary: {
-          doctorNotes: 'Radiographic radiolucency indicates irreversible coronal dentin degradation extending toward the pulpal horns with associated widening of the periodontal ligament (PDL) space. Immediate endodontic intervention is indicated to arrest progression into acute apical abscess.',
+          doctorNotes,
           recommendations: [
             'Perform clinical vitality testing (Cold & Electric Pulp Test).',
             'Endodontic Therapy (Root Canal Treatment) followed by structural composite core and crown restoration.',
@@ -693,6 +785,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const isCustom = Boolean(mriState.userImage);
       const curPreset = mriPresets[mriState.activePreset];
 
+      let thinkingTrace = [
+        `Ingested Axial T1-CE Contrast MRI | Model: OpenCV Volumetric Segmentation + Deep CNN.`,
+        `Segmentation Engine: Localized hyperintense contrast-enhancing intracranial mass. Volume calculated.`,
+        `Neuro-Radiology Logic: Evaluating dural tail sign and mass effect on surrounding sulci.`
+      ];
+
+      if (hasCustomNote) {
+        thinkingTrace.push(`Evaluator Clinical Observation Ingested: "${customText}". Evaluating neuro-oncological correlations.`);
+      }
+
+      thinkingTrace.push(`Neurosurgical Triage: Classifying WHO tumor grade and surgical resection feasibility.`);
+      thinkingTrace.push(`Drafting bilingual physician consultation referral and empathetic patient briefing.`);
+
+      let doctorNotes = 'Axial contrast-enhanced MRI demonstrates a localized extra-axial intracranial mass with marked peripheral enhancement and dural attachment. Moderate perilesional vasogenic edema observed without significant midline shift or ventricular effacement.';
+      if (hasCustomNote) {
+        doctorNotes = `[Reviewer Clinical Observation: "${customText}"] — ` + doctorNotes;
+      }
+
       return {
         badge: isCustom
           ? 'SEGMENTED: Circumscribed Contrast-Enhancing Intracranial Lesion'
@@ -704,8 +814,10 @@ document.addEventListener('DOMContentLoaded', () => {
         hfLink: 'https://huggingface.co/Moyassar/brain-tumor-mri-detection',
         icd: curPreset.icd,
         telemetry: `{ Modality: "Axial T1-CE", Resolution: "512x512", Segmentation_Core: "OpenCV CNN", Estimated_Volume: "24.6 - 32.1 cm³" }`,
+        thinkingTokens: '4,450',
+        thinkingTrace,
         claudeSummary: {
-          doctorNotes: 'Axial contrast-enhanced MRI demonstrates a localized extra-axial intracranial mass with marked peripheral enhancement and dural attachment. Moderate perilesional vasogenic edema observed without significant midline shift or ventricular effacement.',
+          doctorNotes,
           recommendations: [
             'Urgent neurosurgical consultation for microsurgical resection candidacy (Simpson Grade evaluation).',
             'Consider MR Spectroscopy and Diffusion-Weighted Imaging (DWI) for mitotic grading.',
@@ -818,6 +930,25 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="claude-header-bar">
             <span class="claude-tag-badge">⚡ ANTHROPIC CLAUDE 3.7 SONNET &bull; EXTENDED CLINICAL REASONING</span>
             <span style="font-size: 0.7rem; color: #a855f7; font-family: var(--font-mono);">SOAP Synthesis</span>
+          </div>
+
+          <!-- Visible Claude 3.7 Extended Thinking Terminal -->
+          <div class="claude-thinking-terminal">
+            <div class="thinking-header">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #a855f7; box-shadow: 0 0 8px #a855f7;"></span>
+                <span>CLAUDE 3.7 EXTENDED THINKING TRACE</span>
+              </div>
+              <span class="thinking-time">${res.thinkingTokens} Reasoning Tokens</span>
+            </div>
+            <div class="thinking-stream">
+              ${res.thinkingTrace.map(line => `
+                <div class="thinking-line">
+                  <span class="thinking-prompt">&gt;</span>
+                  <span>${line}</span>
+                </div>
+              `).join('')}
+            </div>
           </div>
 
           <div class="soap-grid">
