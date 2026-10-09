@@ -36,6 +36,7 @@
         <a href="#modules">Diagnostic Engines</a>
         <a href="#copilot">Claude Medical Copilot</a>
         <a href="#interactive-demo">Live Sandbox</a>
+        <a href="#whitepapers">Research Papers</a>
         <a href="#architecture">Architecture</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -395,6 +396,92 @@
       </div>
     </section>
 
+    <!-- Clinical Whitepapers & Research Documentation -->
+    <section class="section" id="whitepapers">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">Clinical Validation &amp; Engineering</span>
+          <h2 class="section-title">Research Whitepapers &amp; Architecture Docs</h2>
+          <p class="section-desc">
+            Download our peer-reviewed technical specifications, deep-learning validation benchmarks, and clinical data flow architectures.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="engine-card">
+            <div class="engine-header">
+              <span class="engine-status status-active">Clinical Spec v3</span>
+              <span class="tech-tag">PDF (267 KB)</span>
+            </div>
+            <h3 class="engine-title">Smart Dental AI Clinical Protocol</h3>
+            <p class="engine-desc">
+              Comprehensive clinical pathology documentation, covering YOLOv8 lesion bounding metrics, ResNet-50 multi-label confusion matrices, and clinical sensitivity.
+            </p>
+            <div style="margin-top: auto;">
+              <a href="docs/Smart_Dental_Clinic_AI_Documentation_EN_v3.pdf" target="_blank" class="btn btn-outline btn-block">
+                <span>Download Clinical Docs</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="engine-card">
+            <div class="engine-header">
+              <span class="engine-status status-active">Backend Arch</span>
+              <span class="tech-tag">PDF (4.2 MB)</span>
+            </div>
+            <h3 class="engine-title">Distributed Clinical Server Architecture</h3>
+            <p class="engine-desc">
+              Complete engineering design covering microservices orchestration, MongoDB database design, JWT multi-tenant authentication, and REST API endpoints.
+            </p>
+            <div style="margin-top: auto;">
+              <a href="docs/Smart_Dental_Clinic_Backend_Documentation_EN.pdf" target="_blank" class="btn btn-outline btn-block">
+                <span>Download Backend Spec</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="engine-card">
+            <div class="engine-header">
+              <span class="engine-status status-active">Database ERD</span>
+              <span class="tech-tag">PDF (678 KB)</span>
+            </div>
+            <h3 class="engine-title">Hospital &amp; Clinical Data Models</h3>
+            <p class="engine-desc">
+              Full Entity Relationship Diagram (ERD) mapping patient CBC telemetry, doctor clinic schedules, MRI tumor records, and appointment routing logic.
+            </p>
+            <div style="margin-top: auto;">
+              <a href="docs/Dental_and_Blood_Architecture.pdf" target="_blank" class="btn btn-outline btn-block">
+                <span>Download ERD Blueprint</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Medical Governance & Regulatory Notice -->
+    <section class="section section-dark" style="padding: 50px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+      <div class="container">
+        <div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
+          <div style="display: flex; gap: 14px; align-items: center;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); display: flex; align-items: center; justify-content: center; color: #34d399; font-weight: bold; flex-shrink: 0;">
+              🛡️
+            </div>
+            <div>
+              <h4 style="font-size: 0.95rem; margin-bottom: 2px;">HIPAA &amp; GDPR Ready Architectural Principles</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Zero persistent patient PII storage on inference workers. Ephemeral end-to-end TLS 1.3 encryption.</p>
+            </div>
+          </div>
+          <div style="flex: 1; min-width: 300px; padding: 12px 18px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.78rem; color: var(--text-dim); line-height: 1.5;">
+            <strong>Clinical Disclaimer:</strong> Moyassar Health AI operates as a Class I Clinical Decision Support System (CDSS) intended to assist qualified medical professionals. It does not replace independent clinical judgment.
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact & Startup Verification Footer -->
     <section class="section" id="contact">
       <div class="container">
@@ -446,11 +533,12 @@
     <div class="container footer-content">
       <div>
         <p>&copy; 2026 Moyassar Health AI (moyassar.online). All rights reserved.</p>
-        <p class="footer-sub">Built for clinical diagnostic excellence. Powered by deep learning and Claude API.</p>
+        <p class="footer-sub">Class I Clinical Decision Support System. Powered by Deep Learning &amp; Claude 3.5 API.</p>
       </div>
       <div class="footer-links">
-        <a href="#hero">Back to Top</a>
+        <a href="#hero">Top</a>
         <a href="#modules">Engines</a>
+        <a href="#whitepapers">Whitepapers</a>
         <a href="mailto:contact@moyassar.online">contact@moyassar.online</a>
       </div>
     </div>
