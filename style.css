@@ -115,10 +115,11 @@ body {
 .nav-container {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 16px 24px;
+  padding: 14px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
 }
 
 .brand-logo {
@@ -127,6 +128,8 @@ body {
   gap: 12px;
   text-decoration: none;
   color: var(--text-main);
+  flex-shrink: 0;
+  margin-right: 16px;
 }
 
 .logo-mark {
@@ -152,7 +155,7 @@ body {
 }
 
 .logo-title {
-  font-size: 1.15rem;
+  font-size: 1.12rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   display: flex;
@@ -161,31 +164,35 @@ body {
 }
 
 .badge-ai {
-  font-size: 0.7rem;
-  padding: 2px 7px;
+  font-size: 0.68rem;
+  padding: 2px 8px;
   background: rgba(56, 189, 248, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   color: var(--primary-glow);
   border-radius: var(--radius-full);
-  font-weight: 600;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .logo-sub {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-dim);
   font-family: var(--font-mono);
 }
 
 .nav-links {
   display: flex;
-  gap: 28px;
+  align-items: center;
+  gap: 22px;
+  flex-shrink: 1;
 }
 
 .nav-links a {
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 500;
+  white-space: nowrap;
   transition: var(--transition);
 }
 
@@ -195,7 +202,9 @@ body {
 
 .nav-actions {
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 /* Buttons */
@@ -1072,6 +1081,29 @@ body {
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
 }
 
+.btn-send-inquiry {
+  padding: 13px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+}
+
+.form-secure-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+.form-secure-note svg {
+  color: var(--accent-emerald);
+}
+
 /* Footer */
 .footer {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -1107,6 +1139,18 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 1100px) {
+  .nav-links {
+    gap: 14px;
+  }
+  .nav-links a {
+    font-size: 0.82rem;
+  }
+  .brand-logo {
+    margin-right: 8px;
+  }
+}
+
 @media (max-width: 992px) {
   .grid-3 {
     grid-template-columns: 1fr;
