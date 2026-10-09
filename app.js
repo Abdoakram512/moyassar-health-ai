@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="claude-box">
             <div class="claude-header-bar">
-              <span class="claude-tag-badge">⚡ ANTHROPIC CLAUDE 3.5 CLINICAL SYNTHESIS</span>
+              <span class="claude-tag-badge">⚡ ANTHROPIC CLAUDE 3.7 SONNET (EXTENDED REASONING)</span>
               <span style="font-size: 0.7rem; color: #a855f7; font-family: var(--font-mono);">SOAP Summary</span>
             </div>
             <p style="font-size: 0.86rem; color: #e2e8f0; margin-bottom: 8px;">
