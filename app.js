@@ -906,7 +906,12 @@ document.addEventListener('DOMContentLoaded', () => {
     resultContainer.innerHTML = `
       <div class="result-card">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
-          <span class="result-badge ${res.badgeClass}">${res.badge}</span>
+          <div>
+            <span class="result-badge ${res.badgeClass}">${res.badge}</span>
+            <span style="display: inline-block; font-size: 0.7rem; color: #34d399; font-weight: 700; background: rgba(16, 185, 129, 0.12); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.25); margin-left: 6px;">
+              ✅ LIVE PROPRIETARY ML
+            </span>
+          </div>
           <span style="font-size: 0.72rem; font-family: var(--font-mono); color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(56, 189, 248, 0.25);">
             ICD-10: ${res.icd}
           </span>
@@ -928,8 +933,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- Claude 3.7 Sonnet Medical Reasoning Core -->
         <div class="claude-box">
           <div class="claude-header-bar">
-            <span class="claude-tag-badge">⚡ ANTHROPIC CLAUDE 3.7 SONNET &bull; EXTENDED CLINICAL REASONING</span>
-            <span style="font-size: 0.7rem; color: #a855f7; font-family: var(--font-mono);">SOAP Synthesis</span>
+            <span class="claude-tag-badge">⚡ CLAUDE 3.7 INTEGRATION BLUEPRINT &bull; FUNDED VIA STARTUP GRANT</span>
+            <span style="font-size: 0.7rem; color: #a855f7; font-family: var(--font-mono);">SOAP Architecture</span>
           </div>
 
           <!-- Visible Claude 3.7 Extended Thinking Terminal -->
@@ -937,7 +942,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="thinking-header">
               <div style="display: flex; align-items: center; gap: 6px;">
                 <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #a855f7; box-shadow: 0 0 8px #a855f7;"></span>
-                <span>CLAUDE 3.7 EXTENDED THINKING TRACE</span>
+                <span>CLAUDE 3.7 REASONING BLUEPRINT &bull; TELEMETRY TRACE</span>
               </div>
               <span class="thinking-time">${res.thinkingTokens} Reasoning Tokens</span>
             </div>
