@@ -1,3 +1,13 @@
+---
+title: Moyassar Health AI Inference Core
+emoji: 🩺
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Moyassar Health AI — Real Python Perception & Inference Backend
 
 Production-grade FastAPI inference microservice serving PyTorch & YOLOv8 proprietary models for:
