@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moyassar Health AI — Clinical Diagnostics & Multimodal Intelligence Suite</title>
+  <meta name="description" content="Moyassar Health AI unites deep-learning hematology, dental pathology detection, and neuro-oncology MRI analysis with Claude-powered clinical reasoning.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Glowing Backgrounds -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Header / Navigation -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v20M2 12h20M7 7l10 10M17 7L7 17"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">Moyassar <span class="badge-ai">Health AI</span></span>
+          <span class="logo-sub">moyassar.online</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#modules">Diagnostic Engines</a>
+        <a href="#copilot">Claude Medical Copilot</a>
+        <a href="#interactive-demo">Live Sandbox</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#interactive-demo" class="btn btn-outline btn-sm">Try Interactive Demo</a>
+        <a href="mailto:contact@moyassar.online" class="btn btn-primary btn-sm">Contact Founders</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero" id="hero">
+      <div class="container hero-container">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+          <span>Next-Gen Clinical Diagnostic Suite &bull; Powered by Deep Learning & Claude 3.5</span>
+        </div>
+
+        <h1 class="hero-title">
+          Unifying Medical Diagnostics with <span class="gradient-text">Multimodal Artificial Intelligence</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Moyassar is a comprehensive clinical intelligence platform uniting automated hematology CBC analysis, YOLOv8 dental pathology detection, and MRI neuro-oncology segmentation with Anthropic Claude's clinical reasoning core.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#interactive-demo" class="btn btn-primary btn-lg" id="btn-hero-demo">
+            <span>Launch Live Medical Demo</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#modules" class="btn btn-secondary btn-lg">
+            <span>Explore 3 Clinical Engines</span>
+          </a>
+        </div>
+
+        <!-- Metric Badges -->
+        <div class="metrics-bar">
+          <div class="metric-card">
+            <div class="metric-value">91.06%</div>
+            <div class="metric-label">Dental Pathology Accuracy</div>
+            <div class="metric-caption">ResNet-50 + YOLOv8 Detection</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">&lt; 2.4s</div>
+            <div class="metric-label">Automated CBC Turnaround</div>
+            <div class="metric-caption">Instant Anemia Profiling</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">0.78 mAP</div>
+            <div class="metric-label">Lesion Localization Score</div>
+            <div class="metric-caption">Clinical-grade bounding precision</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">Claude 3.5</div>
+            <div class="metric-label">Clinical Copilot Engine</div>
+            <div class="metric-caption">Physician &amp; Patient Summaries</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The 3 Core Diagnostic Engines -->
+    <section class="section" id="modules">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">Clinical Microservices</span>
+          <h2 class="section-title">Three Specialized Medical AI Engines</h2>
+          <p class="section-desc">
+            Production-engineered pipelines addressing mission-critical clinical triage across hematology, dentistry, and neuro-oncology.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <!-- Engine 1: Blood Diagnosis -->
+          <div class="engine-card">
+            <div class="engine-header">
+              <div class="engine-icon icon-blood">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                </svg>
+              </div>
+              <span class="engine-status status-active">Moyassar Hema</span>
+            </div>
+            <h3 class="engine-title">Automated Blood &amp; CBC Diagnostics</h3>
+            <p class="engine-desc">
+              Comprehensive web platform for blood test automation and Complete Blood Count (CBC) analysis. Features automated anemia subtype classification (Microcytic, Macrocytic, Normocytic) with OpenCV cell segmentation.
+            </p>
+            <ul class="engine-features">
+              <li><span>✓</span> Automated CBC biomarker parsing (RBC, HGB, MCV, MCH)</li>
+              <li><span>✓</span> Instant differential anemia diagnosis</li>
+              <li><span>✓</span> Patient, doctor, and laboratory multi-tenant workflow</li>
+              <li><span>✓</span> Full REST API + automated deployment pipeline</li>
+            </ul>
+            <div class="engine-footer">
+              <span class="tech-tag">Flask</span>
+              <span class="tech-tag">OpenCV</span>
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">SQLite</span>
+            </div>
+          </div>
+
+          <!-- Engine 2: Smart Dental AI -->
+          <div class="engine-card">
+            <div class="engine-header">
+              <div class="engine-icon icon-dental">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 4c-3.5 0-5 2-5 5 0 2.5 1 5 1.5 8 .5 3 2 4 3.5 4s3-1 3.5-4c.5-3 1.5-5.5 1.5-8 0-3-1.5-5-5-5z"/>
+                </svg>
+              </div>
+              <span class="engine-status status-active">Moyassar Dental</span>
+            </div>
+            <h3 class="engine-title">Deep-Learning Dental Pathology Suite</h3>
+            <p class="engine-desc">
+              Clinical-grade dental disease detection utilizing deep learning. Combines ResNet-50 multi-label classification (91.06% accuracy) with YOLOv8 object detection for bounding-box pathology localization.
+            </p>
+            <ul class="engine-features">
+              <li><span>✓</span> Simultaneous detection of 6+ concurrent dental pathologies</li>
+              <li><span>✓</span> Precise bounding box lesion localization (0.78 mAP@0.5)</li>
+              <li><span>✓</span> High-throughput bitewing &amp; panoramic image screening</li>
+              <li><span>✓</span> Node/Express microservice with MongoDB storage</li>
+            </ul>
+            <div class="engine-footer">
+              <span class="tech-tag">YOLOv8</span>
+              <span class="tech-tag">ResNet-50</span>
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">MongoDB</span>
+            </div>
+          </div>
+
+          <!-- Engine 3: BTD Brain Tumor Detection -->
+          <div class="engine-card">
+            <div class="engine-header">
+              <div class="engine-icon icon-neuro">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04zM14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04z"/>
+                </svg>
+              </div>
+              <span class="engine-status status-active">Moyassar Neuro</span>
+            </div>
+            <h3 class="engine-title">Brain Tumor MRI Detection &amp; Clinics</h3>
+            <p class="engine-desc">
+              Integrated neuro-oncology imaging platform connecting computer vision MRI tumor detection directly with hospital clinics, doctor scheduling, and appointment management.
+            </p>
+            <ul class="engine-features">
+              <li><span>✓</span> Brain MRI tumor localization and classification</li>
+              <li><span>✓</span> Doctor clinics schedule, capacity, and appointment engine</li>
+              <li><span>✓</span> Hospital, doctor, patient multi-authentication portal</li>
+              <li><span>✓</span> Laravel backend with Python Flask AI inferencing</li>
+            </ul>
+            <div class="engine-footer">
+              <span class="tech-tag">Laravel</span>
+              <span class="tech-tag">MySQL</span>
+              <span class="tech-tag">Flask AI</span>
+              <span class="tech-tag">Bootstrap</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Claude Medical Copilot Feature -->
+    <section class="section section-copilot" id="copilot">
+      <div class="container">
+        <div class="copilot-box">
+          <div class="copilot-grid">
+            <div class="copilot-content">
+              <div class="copilot-badge">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                </svg>
+                <span>The Core Advantage &bull; Anthropic Claude Integration</span>
+              </div>
+              <h2 class="copilot-title">
+                Turning Raw Computer Vision into <span class="gradient-text">Actionable Clinical Intelligence</span>
+              </h2>
+              <p class="copilot-p">
+                Machine learning models output numbers and bounding boxes. Clinicians and patients need clear, empathetic, and context-aware explanations.
+              </p>
+              <div class="copilot-features">
+                <div class="feature-item">
+                  <div class="feature-icon">1</div>
+                  <div>
+                    <h4>Automated Clinical Summaries (Physician-Ready)</h4>
+                    <p>Claude synthesizes multi-modal inputs into standardized SOAP clinical notes, flagging critical contraindications and follow-up lab protocols.</p>
+                  </div>
+                </div>
+                <div class="feature-item">
+                  <div class="feature-icon">2</div>
+                  <div>
+                    <h4>Empathetic Patient Explanations (Bilingual AR / EN)</h4>
+                    <p>Converts complex jargon (e.g., Microcytic Hypochromic Anemia, Periapical Lesion) into clear guidance in Arabic and English.</p>
+                  </div>
+                </div>
+                <div class="feature-item">
+                  <div class="feature-icon">3</div>
+                  <div>
+                    <h4>Intelligent Clinic Triage &amp; Appointment Routing</h4>
+                    <p>Routes patients to the appropriate specialist clinic based on AI-verified severity and history.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Copilot Terminal Mockup -->
+            <div class="copilot-terminal">
+              <div class="terminal-header">
+                <div class="terminal-dots">
+                  <span class="dot dot-red"></span>
+                  <span class="dot dot-yellow"></span>
+                  <span class="dot dot-green"></span>
+                </div>
+                <div class="terminal-title">claude-3-5-sonnet &bull; clinical-copilot-agent</div>
+                <div class="terminal-tag">LIVE API REASONING</div>
+              </div>
+              <div class="terminal-body" id="copilot-stream-output">
+                <div class="term-line term-prompt">
+                  <span class="term-prefix">&gt; SYSTEM INPUT:</span>
+                  <span class="term-text">Evaluating Patient #MY-4091: Blood CBC + Dental Scan</span>
+                </div>
+                <div class="term-line term-data">
+                  <span class="term-dim">RAW AI TELEMETRY:</span>
+                  <code>{ HGB: 9.2 g/dL, MCV: 68 fL, Dental_YOLO: "Caries_Grade3 [Confidence 94.2%]" }</code>
+                </div>
+                <div class="term-divider"></div>
+                <div class="term-line term-claude">
+                  <span class="term-badge">CLAUDE CLINICAL REASONING:</span>
+                  <p><strong>Primary Finding:</strong> Significant Microcytic Hypochromic profile strongly suggestive of Iron Deficiency Anemia.</p>
+                  <p><strong>Oral Pathology Correlation:</strong> Grade 3 Dental Caries localized on lower molar (#30). Note: Chronic anemia can impair oral mucosa healing.</p>
+                  <p><strong>Suggested Protocol:</strong></p>
+                  <ul>
+                    <li>Order Serum Ferritin &amp; Transferrin Saturation.</li>
+                    <li>Refer to Dental Clinic for restorative intervention prior to oral iron therapy.</li>
+                  </ul>
+                  <div class="term-arabic">
+                    <strong>التقرير للمريض (عربي):</strong> يعاني المريض من مؤشرات فقر دم ناتج عن نقص الحديد مع تسوس متقدم في الضرس السفلي، ننصح ببدء علاج الأسنان وعمل فحص مخزون الحديد.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Live Medical Sandbox -->
+    <section class="section" id="interactive-demo">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">Interactive Clinical Sandbox</span>
+          <h2 class="section-title">Test the Diagnostic Pipeline in Real Time</h2>
+          <p class="section-desc">
+            Select a diagnostic case below to see how Moyassar analyzes medical parameters and synthesizes a Claude clinical report.
+          </p>
+        </div>
+
+        <div class="sandbox-container">
+          <!-- Sample Selector Tabs -->
+          <div class="sandbox-tabs">
+            <button class="tab-btn active" data-sample="cbc">
+              <span class="tab-icon">🩸</span>
+              <span class="tab-name">Case 1: Blood CBC Anemia</span>
+            </button>
+            <button class="tab-btn" data-sample="dental">
+              <span class="tab-icon">🦷</span>
+              <span class="tab-name">Case 2: Dental YOLOv8</span>
+            </button>
+            <button class="tab-btn" data-sample="mri">
+              <span class="tab-icon">🧠</span>
+              <span class="tab-name">Case 3: Brain MRI Tumor</span>
+            </button>
+          </div>
+
+          <!-- Sandbox Content -->
+          <div class="sandbox-grid">
+            <!-- Left: Case Details & Trigger -->
+            <div class="sandbox-panel panel-left">
+              <div class="panel-header">
+                <span class="panel-badge" id="case-badge">Case #CBC-810</span>
+                <h3 id="case-title">Severe Microcytic Anemia CBC Panel</h3>
+              </div>
+
+              <div class="case-meta" id="case-details">
+                <!-- Dynamically updated -->
+              </div>
+
+              <button class="btn btn-primary btn-block" id="btn-run-analysis">
+                <span class="spinner-icon hidden" id="spinner"></span>
+                <span id="btn-run-text">Run Diagnostic &amp; Generate Claude Report</span>
+              </button>
+            </div>
+
+            <!-- Right: AI Output & Claude Report -->
+            <div class="sandbox-panel panel-right">
+              <div class="panel-header">
+                <span class="panel-status status-success" id="sandbox-status">Ready to Run</span>
+                <div class="panel-timestamp">Execution Time: <span id="exec-time">0.0s</span></div>
+              </div>
+
+              <div class="result-container" id="result-container">
+                <div class="result-placeholder">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                  </svg>
+                  <p>Click "Run Diagnostic" to trigger deep-learning telemetry and Claude clinical report generation.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="section section-dark" id="architecture">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">System Architecture</span>
+          <h2 class="section-title">Enterprise Healthcare Cloud Architecture</h2>
+          <p class="section-desc">
+            Designed for high concurrency, patient data privacy, and clinical-grade reliability.
+          </p>
+        </div>
+
+        <div class="arch-diagram">
+          <div class="arch-layer">
+            <div class="layer-title">CLIENT ACCESS LAYER</div>
+            <div class="layer-nodes">
+              <div class="arch-node">Hospital Portals</div>
+              <div class="arch-node">Doctor Dashboard</div>
+              <div class="arch-node">Patient Mobile App</div>
+            </div>
+          </div>
+          <div class="arch-arrow">↓ Secure TLS 1.3 / API Gateway</div>
+          <div class="arch-layer">
+            <div class="layer-title">DIAGNOSTIC MICROSERVICES</div>
+            <div class="layer-nodes">
+              <div class="arch-node highlight-blood">Moyassar Hema (Flask / OpenCV)</div>
+              <div class="arch-node highlight-dental">Moyassar Dental (YOLOv8 / ResNet)</div>
+              <div class="arch-node highlight-neuro">Moyassar Neuro (Laravel / Flask)</div>
+            </div>
+          </div>
+          <div class="arch-arrow">↓ Structured JSON Telemetry &amp; Vector Embeddings</div>
+          <div class="arch-layer layer-claude">
+            <div class="layer-title">CLINICAL REASONING ENGINE</div>
+            <div class="layer-nodes">
+              <div class="arch-node node-claude">
+                <strong>Anthropic Claude 3.5 API</strong>
+                <span>Clinical Notes &bull; Drug Safety &bull; Patient Explanations</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & Startup Verification Footer -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-card">
+          <div class="contact-grid">
+            <div>
+              <span class="section-tag">Official Startup Registry</span>
+              <h2>Moyassar Health AI</h2>
+              <p class="contact-lead">
+                An innovative health-tech startup pioneering automated multimodal diagnostics and AI clinical reasoning.
+              </p>
+              <div class="contact-info">
+                <div class="info-row">
+                  <span class="info-label">Official Domain:</span>
+                  <span class="info-val"><strong>moyassar.online</strong></span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Business Email:</span>
+                  <span class="info-val"><a href="mailto:contact@moyassar.online">contact@moyassar.online</a></span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Founders Team:</span>
+                  <span class="info-val">Abdo Akram &amp; Core AI Engineering Team</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Program:</span>
+                  <span class="info-val">Anthropic Claude for Startups Applicant</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-form-box">
+              <h3>Inquire with the Founders</h3>
+              <p>For clinical partnerships, investor relations, or API integrations:</p>
+              <form class="simple-form" onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent to contact@moyassar.online');">
+                <input type="text" placeholder="Your Name" required class="form-input">
+                <input type="email" placeholder="Your Professional Email" required class="form-input">
+                <textarea rows="3" placeholder="Brief message or clinical inquiry" class="form-input"></textarea>
+                <button type="submit" class="btn btn-primary btn-block">Send Message to contact@moyassar.online</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <p>&copy; 2026 Moyassar Health AI (moyassar.online). All rights reserved.</p>
+        <p class="footer-sub">Built for clinical diagnostic excellence. Powered by deep learning and Claude API.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#hero">Back to Top</a>
+        <a href="#modules">Engines</a>
+        <a href="mailto:contact@moyassar.online">contact@moyassar.online</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
