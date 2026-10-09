@@ -996,7 +996,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div>
             <span class="result-badge ${res.badgeClass}">${res.badge}</span>
             <span style="display: inline-block; font-size: 0.7rem; color: #34d399; font-weight: 700; background: rgba(16, 185, 129, 0.12); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.25); margin-left: 6px;">
-              ✅ LIVE PROPRIETARY ML
+              ✅ PROPRIETARY ML INFERENCE
             </span>
           </div>
           <span style="font-size: 0.72rem; font-family: var(--font-mono); color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(56, 189, 248, 0.25);">
