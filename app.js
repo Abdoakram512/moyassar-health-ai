@@ -73,31 +73,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Python Backend API Configuration (FastAPI on Port 8091)
-  const API_BASE = 'http://127.0.0.1:8091';
+  // Python Backend API Configuration
+  // Uses live Cloudflare HTTPS tunnel for public web visitors (moyassar.online)
+  // or local port 8091 when developing on localhost
+  const CLOUD_API_BASE = 'https://gentleman-fuel-rich-telling.trycloudflare.com';
+  const LOCAL_API_BASE = 'http://127.0.0.1:8091';
+  let API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? LOCAL_API_BASE
+    : CLOUD_API_BASE;
   let isApiOnline = false;
 
   async function checkApiHealth() {
     const pill = document.getElementById('api-status-pill');
+    let activeBase = API_BASE;
+    let res = null;
+
     try {
-      const res = await fetch(`${API_BASE}/api/v1/health`, { method: 'GET', signal: AbortSignal.timeout(2000) });
-      if (res.ok) {
+      res = await fetch(`${activeBase}/api/v1/health`, { method: 'GET', signal: AbortSignal.timeout(3000) });
+    } catch (e) {
+      if (activeBase !== CLOUD_API_BASE) {
+        try {
+          res = await fetch(`${CLOUD_API_BASE}/api/v1/health`, { method: 'GET', signal: AbortSignal.timeout(3000) });
+          if (res && res.ok) {
+            API_BASE = CLOUD_API_BASE;
+            activeBase = CLOUD_API_BASE;
+          }
+        } catch (e2) {}
+      }
+    }
+
+    if (res && res.ok) {
+      try {
         const data = await res.json();
         isApiOnline = true;
         if (pill) {
           pill.className = 'api-status-pill api-live';
           pill.innerHTML = '🟢 Python YOLO API: Online';
-          pill.title = `Connected to local PyTorch ${data.device.toUpperCase()} backend (Dental & Brain YOLOv8 loaded)`;
+          pill.title = `Connected to live PyTorch ${data.device.toUpperCase()} backend (${activeBase.includes('cloudflare') ? 'Cloud HTTPS' : 'Local 8091'})`;
         }
         return true;
-      }
-    } catch (e) {
-      isApiOnline = false;
-      if (pill) {
-        pill.className = 'api-status-pill api-offline';
-        pill.innerHTML = '🟡 Python API: Offline (Benchmark Mode)';
-        pill.title = 'Backend offline. Running on validated clinical benchmark data';
-      }
+      } catch (err) {}
+    }
+
+    isApiOnline = false;
+    if (pill) {
+      pill.className = 'api-status-pill api-offline';
+      pill.innerHTML = '🟡 Python API: Offline (Benchmark Mode)';
+      pill.title = 'Backend offline. Running on validated clinical benchmark data';
     }
     return false;
   }
