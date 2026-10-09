@@ -1,4 +1,4 @@
-// Moyassar Health AI — Clinical Interactive Sandbox & Claude 3.7 Diagnostic Engine
+// Moyassar Health AI — Clinical Interactive Diagnostic Inspector & Claude Reasoning Engine
 document.addEventListener('DOMContentLoaded', () => {
 
   // Global State
@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sample1: {
       name: 'Left Temporal Convexity Meningioma',
       badge: 'Case #BTD-199 &bull; Axial T1-CE MRI',
+      img: 'assets/mri_sample1.jpg',
       contour: { cx: 0.38, cy: 0.52, rx: 0.16, ry: 0.15, label: 'Meningioma (92.1%) &bull; Vol: 24.6 cm³' },
       icd: 'D32.0 (Benign neoplasm of cerebral meninges)',
       modelWeights: 'best.pt (22.5 MB) & brain_tumor_classifier.h5 (58 MB)'
@@ -91,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sample2: {
       name: 'Frontal High-Grade Glioblastoma (GBM)',
       badge: 'Case #BTD-882 &bull; Contrast Ring Enhancement',
+      img: 'assets/mri_sample2.jpg',
       contour: { cx: 0.54, cy: 0.46, rx: 0.18, ry: 0.16, label: 'Glioblastoma Multiforme (94.7%) &bull; Vol: 32.1 cm³' },
       icd: 'C71.9 (Malignant neoplasm of brain, unspecified)',
       modelWeights: 'best.pt (22.5 MB) & brain_tumor_classifier.h5 (58 MB)'
@@ -136,34 +138,62 @@ document.addEventListener('DOMContentLoaded', () => {
     return { val, type: 'norm', label: `Mentzer: ${val} (Normocytic Baseline)` };
   }
 
+  // Helper: Calculate exact letterbox rectangle for object-fit: contain images
+  function getImageRenderedRect(img, containerWidth, containerHeight) {
+    const imgW = img.naturalWidth || 640;
+    const imgH = img.naturalHeight || 640;
+    const imgRatio = imgW / imgH;
+    const containerRatio = containerWidth / containerHeight;
+    let renderW, renderH, offsetX, offsetY;
+
+    if (imgRatio > containerRatio) {
+      renderW = containerWidth;
+      renderH = containerWidth / imgRatio;
+      offsetX = 0;
+      offsetY = (containerHeight - renderH) / 2;
+    } else {
+      renderH = containerHeight;
+      renderW = containerHeight * imgRatio;
+      offsetX = (containerWidth - renderW) / 2;
+      offsetY = 0;
+    }
+
+    return { x: offsetX, y: offsetY, width: renderW, height: renderH };
+  }
+
   // Draw Bounding Boxes on Dental Canvas
   function drawDentalCanvas() {
     const canvas = document.getElementById('dental-canvas');
     const img = document.getElementById('dental-img');
     if (!canvas || !img) return;
 
+    const containerW = canvas.parentElement.clientWidth || 320;
+    const containerH = canvas.parentElement.clientHeight || 230;
+    canvas.width = containerW;
+    canvas.height = containerH;
+
     const ctx = canvas.getContext('2d');
-    canvas.width = canvas.parentElement.clientWidth;
-    canvas.height = canvas.parentElement.clientHeight;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (!dentalState.showOverlay) return;
+
+    const rect = getImageRenderedRect(img, containerW, containerH);
 
     const findings = dentalState.userImage ? [
       { label: 'Detected Dental Pathology [92.6%]', color: '#ef4444', x: 0.35, y: 0.35, w: 0.30, h: 0.28 }
     ] : dentalPresets[dentalState.activePreset].findings;
 
     findings.forEach(f => {
-      const bx = f.x * canvas.width;
-      const by = f.y * canvas.height;
-      const bw = f.w * canvas.width;
-      const bh = f.h * canvas.height;
+      const bx = rect.x + f.x * rect.width;
+      const by = rect.y + f.y * rect.height;
+      const bw = f.w * rect.width;
+      const bh = f.h * rect.height;
 
       // Glow & border
       ctx.strokeStyle = f.color;
       ctx.lineWidth = 3;
       ctx.shadowColor = f.color;
-      ctx.shadowBlur = 10;
+      ctx.shadowBlur = 8;
       ctx.strokeRect(bx, by, bw, bh);
 
       // Semi-transparent fill
@@ -189,21 +219,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const img = document.getElementById('mri-img');
     if (!canvas || !img) return;
 
+    const containerW = canvas.parentElement.clientWidth || 320;
+    const containerH = canvas.parentElement.clientHeight || 230;
+    canvas.width = containerW;
+    canvas.height = containerH;
+
     const ctx = canvas.getContext('2d');
-    canvas.width = canvas.parentElement.clientWidth;
-    canvas.height = canvas.parentElement.clientHeight;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (!mriState.showOverlay) return;
+
+    const rect = getImageRenderedRect(img, containerW, containerH);
 
     const contour = mriState.userImage ? {
       cx: 0.50, cy: 0.50, rx: 0.20, ry: 0.18, label: 'Custom MRI Segmentation Mask &bull; Vol: 28.4 cm³'
     } : mriPresets[mriState.activePreset].contour;
 
-    const cx = contour.cx * canvas.width;
-    const cy = contour.cy * canvas.height;
-    const rx = contour.rx * canvas.width;
-    const ry = contour.ry * canvas.height;
+    const cx = rect.x + contour.cx * rect.width;
+    const cy = rect.y + contour.cy * rect.height;
+    const rx = contour.rx * rect.width;
+    const ry = contour.ry * rect.height;
 
     // Glowing Radial Heatmap
     const grad = ctx.createRadialGradient(cx, cy, 5, cx, cy, rx);
@@ -266,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mentzer = getMentzer(cbcState.mcv, cbcState.rbc);
     controlsContainer.innerHTML = `
       <div class="preset-container">
-        <span class="preset-label">Quick Clinical Presets:</span>
+        <span class="preset-label">Clinical Diagnostic Presets:</span>
         <div class="preset-buttons">
           <button class="preset-btn ${cbcState.name === cbcPresets.ida.name ? 'active' : ''}" data-cbc="ida">🩸 Severe IDA</button>
           <button class="preset-btn ${cbcState.name === cbcPresets.thal.name ? 'active' : ''}" data-cbc="thal">🧬 Thalassemia Trait</button>
@@ -327,10 +362,10 @@ document.addEventListener('DOMContentLoaded', () => {
       <!-- Reviewer Custom Telemetry Input Box -->
       <div class="reviewer-custom-box">
         <div class="reviewer-custom-label">
-          <span>✍️ Reviewer Custom Scenario / Clinical Symptoms:</span>
-          <span style="font-size: 0.7rem; color: #38bdf8; font-weight: normal;">Optional Query</span>
+          <span>✍️ Custom Scenario / Patient Symptoms (Optional):</span>
+          <span style="font-size: 0.7rem; color: #38bdf8; font-weight: normal;">Live Input</span>
         </div>
-        <textarea id="reviewer-custom-input" class="reviewer-custom-textarea" placeholder="Type custom clinical scenario (e.g. Female 28yo, severe fatigue, HGB 8.1, heavy bleeding; or custom lab notes)..."></textarea>
+        <textarea id="reviewer-custom-input" class="reviewer-custom-textarea" placeholder="Type custom clinical scenario (e.g. Female 28yo, severe fatigue, HGB 8.1, heavy bleeding; or custom notes)..."></textarea>
       </div>
     `;
 
@@ -339,6 +374,8 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => {
         const key = btn.getAttribute('data-cbc');
         cbcState = { ...cbcPresets[key] };
+        caseBadge.innerHTML = cbcState.badge;
+        caseTitle.textContent = cbcState.name;
         renderCbcControls();
       });
     });
@@ -411,8 +448,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <!-- Reviewer Custom Telemetry Input Box -->
       <div class="reviewer-custom-box">
         <div class="reviewer-custom-label">
-          <span>✍️ Reviewer Custom Notes / Tooth Findings:</span>
-          <span style="font-size: 0.7rem; color: #38bdf8; font-weight: normal;">Optional Query</span>
+          <span>✍️ Custom Tooth Findings / Symptoms:</span>
+          <span style="font-size: 0.7rem; color: #38bdf8; font-weight: normal;">Live Input</span>
         </div>
         <textarea id="reviewer-custom-input" class="reviewer-custom-textarea" placeholder="Type custom clinical scenario (e.g. Tooth #46 cold sensitivity, deep distal cavitation, percussion tenderness)..."></textarea>
       </div>
@@ -424,6 +461,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const k = btn.getAttribute('data-dental');
         dentalState.activePreset = k;
         dentalState.userImage = null;
+        caseBadge.innerHTML = dentalPresets[k].badge;
+        caseTitle.textContent = dentalPresets[k].name;
         renderDentalControls();
       });
     });
@@ -439,19 +478,42 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Image Upload
+    // Image Upload & Drag-and-Drop
     const dropzone = document.getElementById('dental-dropzone');
     const fileInput = document.getElementById('dental-file-input');
+
+    const handleDentalFile = (file) => {
+      if (!file || !file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        dentalState.userImage = ev.target.result;
+        caseBadge.innerHTML = 'Case #DNT-CUSTOM &bull; Uploaded X-Ray';
+        caseTitle.textContent = 'Custom Radiographic Evaluation';
+        renderDentalControls();
+      };
+      reader.readAsDataURL(file);
+    };
+
     if (dropzone && fileInput) {
       dropzone.addEventListener('click', () => fileInput.click());
       fileInput.addEventListener('change', (e) => {
         if (e.target.files && e.target.files[0]) {
-          const reader = new FileReader();
-          reader.onload = (ev) => {
-            dentalState.userImage = ev.target.result;
-            renderDentalControls();
-          };
-          reader.readAsDataURL(e.target.files[0]);
+          handleDentalFile(e.target.files[0]);
+        }
+      });
+
+      dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('drag-active');
+      });
+      dropzone.addEventListener('dragleave', () => {
+        dropzone.classList.remove('drag-active');
+      });
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('drag-active');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          handleDentalFile(e.dataTransfer.files[0]);
         }
       });
     }
@@ -459,8 +521,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Canvas Draw on Image Load
     const imgEl = document.getElementById('dental-img');
     if (imgEl) {
-      imgEl.onload = () => drawDentalCanvas();
-      if (imgEl.complete) drawDentalCanvas();
+      imgEl.onload = () => requestAnimationFrame(drawDentalCanvas);
+      if (imgEl.complete) requestAnimationFrame(drawDentalCanvas);
     }
 
     bindReviewerCustomInput();
@@ -506,8 +568,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <!-- Reviewer Custom Telemetry Input Box -->
       <div class="reviewer-custom-box">
         <div class="reviewer-custom-label">
-          <span>✍️ Reviewer Custom Clinical Symptoms / Findings:</span>
-          <span style="font-size: 0.7rem; color: #38bdf8; font-weight: normal;">Optional Query</span>
+          <span>✍️ Custom Clinical Symptoms / Findings:</span>
+          <span style="font-size: 0.7rem; color: #38bdf8; font-weight: normal;">Live Input</span>
         </div>
         <textarea id="reviewer-custom-input" class="reviewer-custom-textarea" placeholder="Type custom clinical scenario (e.g. Male 49yo, refractory morning cephalea, progressive visual aura, papilledema)..."></textarea>
       </div>
@@ -519,6 +581,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const k = btn.getAttribute('data-mri');
         mriState.activePreset = k;
         mriState.userImage = null;
+        caseBadge.innerHTML = mriPresets[k].badge;
+        caseTitle.textContent = mriPresets[k].name;
         renderMriControls();
       });
     });
@@ -534,19 +598,42 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Image Upload
+    // Image Upload & Drag-and-Drop
     const dropzone = document.getElementById('mri-dropzone');
     const fileInput = document.getElementById('mri-file-input');
+
+    const handleMriFile = (file) => {
+      if (!file || !file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        mriState.userImage = ev.target.result;
+        caseBadge.innerHTML = 'Case #BTD-CUSTOM &bull; Uploaded MRI';
+        caseTitle.textContent = 'Custom Axial MRI Segmentation';
+        renderMriControls();
+      };
+      reader.readAsDataURL(file);
+    };
+
     if (dropzone && fileInput) {
       dropzone.addEventListener('click', () => fileInput.click());
       fileInput.addEventListener('change', (e) => {
         if (e.target.files && e.target.files[0]) {
-          const reader = new FileReader();
-          reader.onload = (ev) => {
-            mriState.userImage = ev.target.result;
-            renderMriControls();
-          };
-          reader.readAsDataURL(e.target.files[0]);
+          handleMriFile(e.target.files[0]);
+        }
+      });
+
+      dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('drag-active');
+      });
+      dropzone.addEventListener('dragleave', () => {
+        dropzone.classList.remove('drag-active');
+      });
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('drag-active');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          handleMriFile(e.dataTransfer.files[0]);
         }
       });
     }
@@ -554,8 +641,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Canvas Draw on Image Load
     const imgEl = document.getElementById('mri-img');
     if (imgEl) {
-      imgEl.onload = () => drawMriCanvas();
-      if (imgEl.complete) drawMriCanvas();
+      imgEl.onload = () => requestAnimationFrame(drawMriCanvas);
+      if (imgEl.complete) requestAnimationFrame(drawMriCanvas);
     }
 
     bindReviewerCustomInput();
@@ -565,16 +652,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function switchModule(modKey) {
     currentModule = modKey;
     if (modKey === 'cbc') {
-      caseBadge.innerHTML = cbcState.badge || 'Case #CBC-810';
+      caseBadge.innerHTML = cbcState.badge || 'Case #CBC-810 &bull; Microcytic Hypochromic';
       caseTitle.textContent = 'Automated CBC Anemia Differential Panel';
       renderCbcControls();
     } else if (modKey === 'dental') {
       caseBadge.innerHTML = dentalPresets[dentalState.activePreset].badge;
-      caseTitle.textContent = 'YOLOv8x Dental Pathology & Lesion Detection';
+      caseTitle.textContent = dentalPresets[dentalState.activePreset].name;
       renderDentalControls();
     } else if (modKey === 'mri') {
       caseBadge.innerHTML = mriPresets[mriState.activePreset].badge;
-      caseTitle.textContent = 'Axial T1-CE Brain MRI Tumor Segmentation';
+      caseTitle.textContent = mriPresets[mriState.activePreset].name;
       renderMriControls();
     }
 
@@ -592,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <path d="M12 6v6l4 2"/>
         </svg>
         <p style="font-size: 0.92rem; color: #94a3b8; max-width: 380px; margin: 0 auto;">
-          Ready to run diagnostic evaluation on <strong>${caseTitle.textContent}</strong>. Click "Run Diagnostic &amp; Generate Claude 3.7 Report" below.
+          Ready to run diagnostic evaluation on <strong>${caseTitle.textContent}</strong>. Click "Run Diagnostic &amp; Generate Claude Report" below.
         </p>
       </div>
     `;
@@ -638,7 +725,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ];
 
       if (hasCustomNote) {
-        thinkingTrace.push(`Evaluator Clinical Observation Ingested: "${customText}". Correlating symptom narrative with red blood cell indices.`);
+        thinkingTrace.push(`Clinical Presentation Note: "${customText}". Correlating clinical narrative with quantitative red cell indices.`);
       }
 
       if (hgb >= 12.0 && mcv >= 80 && mcv <= 100) {
@@ -716,7 +803,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (hasCustomNote) {
-        doctorNotes = `[Reviewer Custom Presentation: "${customText}"] — ` + doctorNotes;
+        doctorNotes = `[Clinical Presentation Note: "${customText}"] — ` + doctorNotes;
       }
 
       return {
@@ -747,7 +834,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ];
 
       if (hasCustomNote) {
-        thinkingTrace.push(`Evaluator Clinical Observation Ingested: "${customText}". Correlating clinical symptoms with radiographic radiolucencies.`);
+        thinkingTrace.push(`Clinical Presentation Note: "${customText}". Correlating clinical symptoms with radiographic radiolucencies.`);
       }
 
       thinkingTrace.push(`Evaluating Endodontic Vitality Protocol: Pulpitis categorized as irreversible. ICD-10 K02.62.`);
@@ -755,7 +842,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let doctorNotes = 'Radiographic radiolucency indicates irreversible coronal dentin degradation extending toward the pulpal horns with associated widening of the periodontal ligament (PDL) space. Immediate endodontic intervention is indicated to arrest progression into acute apical abscess.';
       if (hasCustomNote) {
-        doctorNotes = `[Reviewer Clinical Observation: "${customText}"] — ` + doctorNotes;
+        doctorNotes = `[Clinical Presentation Note: "${customText}"] — ` + doctorNotes;
       }
 
       return {
@@ -792,7 +879,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ];
 
       if (hasCustomNote) {
-        thinkingTrace.push(`Evaluator Clinical Observation Ingested: "${customText}". Evaluating neuro-oncological correlations.`);
+        thinkingTrace.push(`Clinical Presentation Note: "${customText}". Evaluating neuro-oncological correlations.`);
       }
 
       thinkingTrace.push(`Neurosurgical Triage: Classifying WHO tumor grade and surgical resection feasibility.`);
@@ -800,7 +887,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let doctorNotes = 'Axial contrast-enhanced MRI demonstrates a localized extra-axial intracranial mass with marked peripheral enhancement and dural attachment. Moderate perilesional vasogenic edema observed without significant midline shift or ventricular effacement.';
       if (hasCustomNote) {
-        doctorNotes = `[Reviewer Clinical Observation: "${customText}"] — ` + doctorNotes;
+        doctorNotes = `[Clinical Presentation Note: "${customText}"] — ` + doctorNotes;
       }
 
       return {
@@ -861,19 +948,19 @@ document.addEventListener('DOMContentLoaded', () => {
         stepNodes[1].classList.remove('active');
         stepNodes[1].classList.add('completed');
         stepNodes[2].classList.add('active');
-        btnRunText.textContent = 'Serializing Telemetry to Claude 3.7 Sonnet API...';
+        btnRunText.textContent = 'Serializing Telemetry to Claude API Interface...';
 
         // Draw Canvas Overlays if active
         if (currentModule === 'dental') drawDentalCanvas();
         if (currentModule === 'mri') drawMriCanvas();
 
-        // Step 3: Claude API Query (1100ms)
+        // Step 3: Claude API Interface (1100ms)
         setTimeout(() => {
           progressFill.style.width = '88%';
           stepNodes[2].classList.remove('active');
           stepNodes[2].classList.add('completed');
           stepNodes[3].classList.add('active');
-          btnRunText.textContent = 'Claude 3.7 Extended Clinical Reasoning & SOAP Synthesis...';
+          btnRunText.textContent = 'Synthesizing Claude Clinical Reasoning & SOAP Notes...';
 
           // Step 4: Final Synthesis (1500ms)
           setTimeout(() => {
@@ -930,19 +1017,19 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="meta-value" style="font-size: 0.74rem; color: #94a3b8; word-break: break-all;">${res.telemetry}</span>
         </div>
 
-        <!-- Claude 3.7 Sonnet Medical Reasoning Core -->
+        <!-- Claude Medical Reasoning Core -->
         <div class="claude-box">
           <div class="claude-header-bar">
-            <span class="claude-tag-badge">⚡ CLAUDE 3.7 INTEGRATION BLUEPRINT &bull; FUNDED VIA STARTUP GRANT</span>
+            <span class="claude-tag-badge">⚡ CLAUDE AI CLINICAL INTEGRATION BLUEPRINT</span>
             <span style="font-size: 0.7rem; color: #a855f7; font-family: var(--font-mono);">SOAP Architecture</span>
           </div>
 
-          <!-- Visible Claude 3.7 Extended Thinking Terminal -->
+          <!-- Visible Claude Extended Thinking Terminal -->
           <div class="claude-thinking-terminal">
             <div class="thinking-header">
               <div style="display: flex; align-items: center; gap: 6px;">
                 <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #a855f7; box-shadow: 0 0 8px #a855f7;"></span>
-                <span>CLAUDE 3.7 REASONING BLUEPRINT &bull; TELEMETRY TRACE</span>
+                <span>CLAUDE CLINICAL REASONING TRACE &bull; TELEMETRY LOG</span>
               </div>
               <span class="thinking-time">${res.thinkingTokens} Reasoning Tokens</span>
             </div>
@@ -1050,7 +1137,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div><strong>Confidence Score:</strong> ${res.confidence}</div>
           <div><strong>Primary Finding:</strong> ${res.badge}</div>
           <div><strong>ICD-10 Diagnostic Code:</strong> ${res.icd}</div>
-          <div><strong>Reasoning Engine:</strong> Anthropic Claude 3.7 Sonnet (Extended Reasoning)</div>
+          <div><strong>Clinical Reasoning:</strong> Anthropic Claude AI Clinical Intelligence Core</div>
           <div><strong>Execution Latency:</strong> ${res.time}</div>
         </div>
 
@@ -1130,7 +1217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Handle window resize for dynamic canvas redraw
   window.addEventListener('resize', () => {
-    if (currentModule === 'dental') drawDentalCanvas();
-    if (currentModule === 'mri') drawMriCanvas();
+    if (currentModule === 'dental') requestAnimationFrame(drawDentalCanvas);
+    if (currentModule === 'mri') requestAnimationFrame(drawMriCanvas);
   });
 });
