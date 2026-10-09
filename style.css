@@ -969,6 +969,43 @@ body {
   font-family: var(--font-mono);
 }
 
+.api-status-pill {
+  font-size: 0.68rem;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition);
+}
+
+.api-status-pill.api-live {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #34d399;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+}
+
+.api-status-pill.api-offline {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
+.api-status-pill.api-inferring {
+  background: rgba(56, 189, 248, 0.18);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  color: #38bdf8;
+  animation: pulseGlow 1.2s infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
 .hidden {
   display: none !important;
 }
@@ -1850,6 +1887,30 @@ body {
 
 .dataflow-icon {
   font-size: 1.1rem;
+  color: #38bdf8;
+}
+
+.api-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  transition: all 0.25s ease;
+}
+
+.api-status-pill.api-live {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
+.api-status-pill.api-simulated {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
   color: #38bdf8;
 }
 
