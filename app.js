@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isApiOnline = true;
         if (pill) {
           pill.className = 'api-status-pill api-live';
-          pill.innerHTML = '🟢 Python YOLO API: Online';
+          pill.innerHTML = '🟢 Diagnostic Engine: Online';
           pill.title = `Connected to live PyTorch ${data.device.toUpperCase()} backend (${activeBase.includes('cloudflare') ? 'Cloud HTTPS' : 'Local 8091'})`;
         }
         return true;
@@ -118,8 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
     isApiOnline = false;
     if (pill) {
       pill.className = 'api-status-pill api-offline';
-      pill.innerHTML = '🟡 Python API: Offline (Benchmark Mode)';
-      pill.title = 'Backend offline. Running on validated clinical benchmark data';
+      pill.innerHTML = '🟡 Standalone Benchmark Mode';
+      pill.title = 'Running on validated clinical benchmark data';
     }
     return false;
   }
@@ -129,12 +129,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!pill) return;
     if (online) {
       pill.className = 'api-status-pill api-live';
-      pill.innerHTML = '🟢 Python YOLO API: Online';
+      pill.innerHTML = '🟢 Diagnostic Engine: Online';
       pill.title = details || 'Connected to FastAPI PyTorch worker on port 8091';
     } else {
       pill.className = 'api-status-pill api-offline';
-      pill.innerHTML = '🟡 Python API: Offline (Benchmark Mode)';
-      pill.title = details || 'Backend offline. Running on validated clinical benchmark data';
+      pill.innerHTML = '🟡 Standalone Benchmark Mode';
+      pill.title = details || 'Running on validated clinical benchmark data';
     }
   }
 
@@ -1424,7 +1424,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- Clinical Synthesis & Decision Support Protocol -->
         <div class="claude-box">
           <div class="claude-header-bar">
-            <span class="claude-tag-badge">📋 CLINICAL SYNTHESIS PROTOCOL &bull; CLAUDE INTEGRATION BLUEPRINT</span>
+            <span class="claude-tag-badge">📋 CLINICAL SYNTHESIS PROTOCOL &bull; MULTIMODAL CDSS</span>
             <span style="font-size: 0.7rem; color: #a855f7; font-family: var(--font-mono);">Structured SOAP Engine</span>
           </div>
 
@@ -1528,7 +1528,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="header">
           <div>
             <div class="logo-title">Moyassar Health AI</div>
-            <div class="logo-sub">Clinical Decision Support System (CDSS) &bull; moyassar.online</div>
+            <div class="logo-sub">Clinical Decision Support System (CDSS)</div>
           </div>
           <div style="text-align: right; font-size: 13px; color: #64748b;">
             <div>Date: ${new Date().toLocaleDateString()}</div>
@@ -1541,7 +1541,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div><strong>Confidence Score:</strong> ${res.confidence}</div>
           <div><strong>Primary Finding:</strong> ${res.badge}</div>
           <div><strong>ICD-10 Diagnostic Code:</strong> ${res.icd}</div>
-          <div><strong>Clinical Synthesis:</strong> Moyassar Clinical Decision Support Engine (Blueprint for Claude Integration)</div>
+          <div><strong>Clinical Synthesis:</strong> Moyassar Clinical Decision Support Engine</div>
           <div><strong>Execution Latency:</strong> ${res.time}</div>
         </div>
 
@@ -1561,7 +1561,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="footer">
           Class I Clinical Decision Support System. Not intended to replace independent licensed physician evaluation.<br>
-          Moyassar Health AI &copy; 2026. All rights reserved. contact@moyassar.online
+          Moyassar Health AI &copy; 2026. All rights reserved.
         </div>
 
         <div style="text-align: center; margin-top: 25px;">
