@@ -1025,7 +1025,7 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* Reviewer Notice Banner */
+/* Transparency Notice Banner */
 .reviewer-banner {
   display: flex;
   align-items: center;
@@ -1054,7 +1054,7 @@ body {
   gap: 4px;
 }
 
-/* Reviewer Custom Prompt Box */
+/* Clinical Notes Input Box */
 .reviewer-custom-box {
   margin-top: 14px;
   background: rgba(255, 255, 255, 0.02);

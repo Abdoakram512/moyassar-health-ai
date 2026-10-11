@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Global State
   let currentModule = 'cbc';
   let isInferring = false;
-  let reviewerCustomNote = '';
+  let clinicalCustomNote = '';
 
   // Data Stores
   const cbcPresets = {
@@ -436,13 +436,13 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.fillText(tag, pillX + 8, pillY);
   }
 
-  // Bind Reviewer Custom Input
-  function bindReviewerCustomInput() {
+  // Bind Clinical Custom Input
+  function bindClinicalCustomInput() {
     const el = document.getElementById('reviewer-custom-input');
     if (el) {
-      el.value = reviewerCustomNote;
+      el.value = clinicalCustomNote;
       el.addEventListener('input', (e) => {
-        reviewerCustomNote = e.target.value;
+        clinicalCustomNote = e.target.value;
       });
     }
   }
@@ -510,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="mentzer-pill mentzer-${mentzer.type}" id="mentzer-pill">${mentzer.label}</span>
       </div>
 
-      <!-- Reviewer Custom Telemetry Input Box -->
+      <!-- Clinical Notes Input Box -->
       <div class="reviewer-custom-box">
         <div class="reviewer-custom-label">
           <span>✍️ Custom Scenario / Patient Symptoms (Optional):</span>
@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bindSlider('rbc', 'rbc', 'x 10¹²/L');
     bindSlider('ferritin', 'ferritin', 'ng/mL');
 
-    bindReviewerCustomInput();
+    bindClinicalCustomInput();
   }
 
   // Render Left Panel for Dental
@@ -597,7 +597,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Reviewer Custom Telemetry Input Box -->
+      <!-- Clinical Notes Input Box -->
       <div class="reviewer-custom-box">
         <div class="reviewer-custom-label">
           <span>✍️ Custom Tooth Findings / Symptoms:</span>
@@ -684,7 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (imgEl.complete) requestAnimationFrame(drawDentalCanvas);
     }
 
-    bindReviewerCustomInput();
+    bindClinicalCustomInput();
   }
 
   // Render Left Panel for MRI
@@ -725,7 +725,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Reviewer Custom Telemetry Input Box -->
+      <!-- Clinical Notes Input Box -->
       <div class="reviewer-custom-box">
         <div class="reviewer-custom-label">
           <span>✍️ Custom Clinical Symptoms / Findings:</span>
@@ -812,7 +812,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (imgEl.complete) requestAnimationFrame(drawMriCanvas);
     }
 
-    bindReviewerCustomInput();
+    bindClinicalCustomInput();
   }
 
   // Master Switch Module
@@ -868,8 +868,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Diagnostic Report Synthesizer (Generates Clinical Report based on active parameters)
   function synthesizeDiagnosticReport(modKey) {
-    const hasCustomNote = Boolean(reviewerCustomNote && reviewerCustomNote.trim().length > 0);
-    const customText = hasCustomNote ? reviewerCustomNote.trim() : '';
+    const hasCustomNote = Boolean(clinicalCustomNote && clinicalCustomNote.trim().length > 0);
+    const customText = hasCustomNote ? clinicalCustomNote.trim() : '';
 
     if (modKey === 'cbc') {
       const hgb = cbcState.hgb;
@@ -1339,7 +1339,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mch: cbcState.mch,
             rbc: cbcState.rbc,
             ferritin: cbcState.ferritin,
-            notes: reviewerCustomNote || ''
+            notes: clinicalCustomNote || ''
           }),
           signal: AbortSignal.timeout(6000)
         });
